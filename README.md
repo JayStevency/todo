@@ -26,12 +26,29 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+This is a todo app.
 
 ## Installation
 
+- dependencies
+
 ```bash
 $ npm install
+```
+
+- dotenv
+
+```bash
+$ touch .development.env
+```
+
+.development.env
+```bash
+TYPEORM_HOST = 
+TYPEORM_PORT = 
+TYPEORM_USERNAME = 
+TYPEORM_PASSWORD = 
+TYPEORM_DATABASE = 
 ```
 
 ## Running the app
