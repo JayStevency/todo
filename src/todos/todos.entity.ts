@@ -15,7 +15,8 @@ export class Todo {
   due: Date;
 
   @Column({
-    name: 'is_checked'
+    name: 'is_checked',
+    default: false,
   })
   isChecked: boolean;
 
@@ -29,7 +30,15 @@ export class Todo {
   })
   updatedAt: Date;
 
-  @ManyToOne(type => Todo, todo=> todo.children)
+  @Column({
+    name: 'deleted_at',
+    nullable: true
+  })
+  deletedAt: 'deleted_at'
+
+  @ManyToOne(type => Todo, todo=> todo.children, {
+    onDelete: 'CASCADE'
+  })
   parent: Todo;
 
   @OneToMany(type => Todo, todo => todo.parent)
