@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, getRepository } from 'typeorm';
 import { Todo } from './todos.entity';
-import { CreateTodoDto, UpdateTodoDto } from './dto'
+import { CreateTodoDto, UpdateTodoDto, FindAllTodoDto } from './dto'
 
 @Injectable()
 export class TodosService {
@@ -25,7 +25,7 @@ export class TodosService {
     return createdTodo;
   }
 
-  async findAll(query) {
+  async findAll(query: FindAllTodoDto) {
     const queryBuilder = await getRepository(Todo)
       .createQueryBuilder('todos')
       .leftJoinAndSelect('todos.parent', 'parent')
@@ -39,22 +39,30 @@ export class TodosService {
     if ('value' in query) {
       queryBuilder.andWhere('todos.value LIKE :value', { value: `%${query.value}%`})
     }
-    
+
     if ('before' in query) {
       queryBuilder.andWhere('todos.updated_at <= :before', {before: query.before})
-    } else if ('after' in query) {
+    }
+    if ('after' in query) {
       queryBuilder.andWhere('todos.updated_at >= :after', {after: query.after})
     }
+
     if ('sort' in query) {
-      queryBuilder.orderBy('todos.updated_at', query.sort)
+      if (query.sort === 'asc'){
+        queryBuilder.orderBy('todos.updated_at', "ASC");
+      }else {
+        queryBuilder.orderBy('todos.updated_at', "DESC");
+      }
     }
+
     let limit = 50
     let offset = 0
     if ('count' in query) {
       limit = query.count > 50 ? 50 : query.count
     }
     if ('page' in query) {
-      offset = query.page * limit
+      const page = query.page -1 >= 0 ? query.page - 1 : query.page
+      offset = page * limit
     }
     queryBuilder.limit(limit)
     queryBuilder.offset(offset)
