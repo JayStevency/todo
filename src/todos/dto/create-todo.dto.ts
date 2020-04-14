@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, IsDateString } from 'class-validator';
+import { IsString, IsNotEmpty, IsDateString, IsNumber } from 'class-validator';
 
 export class CreateTodoDto {
   @IsString()
@@ -7,4 +7,7 @@ export class CreateTodoDto {
 
   @IsDateString()
   due: Date;
+
+  @IsNumber()
+  parentId: number;
 }
