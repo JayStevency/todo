@@ -16,12 +16,12 @@ export class TodosController {
   async findAllTodo(@Query() qs: FindAllTodoDto) {
     return this.todosService.findAll(qs)
   }
-  @Patch(':todoId')
+  @Patch(':itemId')
   async updateTodo(@Param() params, @Body() todo: UpdateTodoDto) {
-    return this.todosService.update(params.todoId, todo)
+    return this.todosService.update(params.itemId, todo)
   }
-  @Delete(':todoId')
+  @Delete(':itemId')
   async deleteTodo(@Param() params){
-    return this.todosService.softDelete(params.todoId)
+    return this.todosService.softDelete(params.itemId)
   }
 }
