@@ -34,7 +34,7 @@ export class Todo {
     name: 'deleted_at',
     nullable: true
   })
-  deletedAt: 'deleted_at'
+  deletedAt: Date;
 
   @ManyToOne(type => Todo, todo=> todo.children, {
     onDelete: 'CASCADE'

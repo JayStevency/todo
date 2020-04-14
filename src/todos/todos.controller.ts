@@ -1,6 +1,6 @@
-import { Controller, Post, Body, Get, Query, Patch } from '@nestjs/common';
+import { Controller, Post, Body, Get, Query, Patch, Param, Delete } from '@nestjs/common';
 import { TodosService } from './todos.service';
-import { CreateTodoDto } from './dto'
+import { CreateTodoDto, UpdateTodoDto } from './dto'
 
 @Controller('items')
 export class TodosController {
@@ -10,10 +10,18 @@ export class TodosController {
 
   @Post()
   async createTodo(@Body() todo: CreateTodoDto) {
-    return this.todosService.createTodo(todo)
+    return this.todosService.create(todo)
   }
   @Get()
   async findAllTodo(@Query() qs) {
     return this.todosService.findAll(qs)
+  }
+  @Patch(':todoId')
+  async updateTodo(@Param() params, @Body() todo: UpdateTodoDto) {
+    return this.todosService.update(params.todoId, todo)
+  }
+  @Delete(':todoId')
+  async deleteTodo(@Param() params){
+    return this.todosService.softDelete(params.todoId)
   }
 }
