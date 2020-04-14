@@ -1,7 +1,6 @@
 import { Injectable, Query } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, getRepository } from 'typeorm';
-// import { paginate, Pagination, IPaginationOptions } from 'nestjs-typeorm-paginate';
 import { Todo } from './todos.entity';
 import { CreateTodoDto, UpdateTodoDto } from './dto'
 
